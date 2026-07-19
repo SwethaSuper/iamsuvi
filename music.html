@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Stream SUVI — iamsuvi.com/music</title>
+<meta name="description" content="Stream SUVI everywhere — Spotify, Apple Music, YouTube Music, Amazon Music, Gaana, JioSaavn.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --cream:#FBF6E9;
+    --butter:#E8C558;
+    --rose:#D48BA8;
+    --rose-soft:rgba(212,139,168,.16);
+    --rose-mid:rgba(212,139,168,.38);
+    --lilac:#B8A0D8;
+    --sage:#A8CFA0;
+    --ink:#3E2E4F;
+    --ink-soft:rgba(62,46,79,.62);
+    --line:rgba(62,46,79,.22);
+    --line-strong:rgba(62,46,79,.45);
+  }
+  *{box-sizing:border-box; margin:0;}
+  body{
+    background-color:var(--cream);
+    background-image:
+      radial-gradient(ellipse 60% 40% at 90% 5%, var(--rose-soft) 0, transparent 70%),
+      radial-gradient(rgba(62,46,79,.13) 1px, transparent 1px);
+    background-size:100% 100%, 22px 22px;
+    color:var(--ink);
+    font-family:'Inter', sans-serif;
+    font-size:16px;
+    line-height:1.6;
+    min-height:100vh;
+  }
+  a{color:inherit; text-decoration:none;}
+  .mono{font-family:'JetBrains Mono', monospace; font-size:11px; letter-spacing:.14em; text-transform:uppercase;}
+
+  .topbar{
+    position:sticky; top:0; z-index:50;
+    display:flex; align-items:center; justify-content:space-between;
+    padding:14px 24px;
+    background:rgba(251,246,233,.88);
+    backdrop-filter:blur(8px);
+    border-bottom:1px solid var(--line);
+  }
+  .topbar .logo img{height:26px; display:block;}
+  .topbar a.back{color:var(--ink-soft);}
+  .topbar a.back:hover{color:var(--ink); border-bottom:1px solid var(--rose);}
+
+  .wrap{max-width:720px; margin:0 auto; padding:70px 24px 100px;}
+
+  .head .sys{color:var(--ink-soft); margin-bottom:22px; display:flex; align-items:center; gap:10px;}
+  .head .sys::before{content:''; width:7px; height:7px; border-radius:50%; background:var(--rose);}
+  .head-logo{width:min(300px, 70%); display:block; margin-bottom:22px;}
+  h1{
+    font-family:'Cormorant Garamond', serif;
+    font-weight:500;
+    font-size:clamp(2.2rem, 6vw, 3.2rem);
+    line-height:1.05;
+    margin-bottom:16px;
+  }
+  h1 em{font-style:italic; font-weight:400; color:var(--rose);}
+  .head p{color:var(--ink-soft); max-width:48ch; margin-bottom:52px;}
+
+  .featured{
+    border:1px solid var(--ink);
+    box-shadow:8px 8px 0 var(--rose-mid);
+    background:var(--rose-soft);
+    padding:30px 28px;
+    margin-bottom:60px;
+    display:flex; align-items:center; justify-content:space-between; gap:20px;
+    flex-wrap:wrap;
+  }
+  .featured .mono{color:var(--ink-soft); display:block; margin-bottom:8px;}
+  .featured h2{font-family:'Cormorant Garamond', serif; font-weight:600; font-size:1.8rem; line-height:1.1;}
+  .btn{
+    display:inline-flex; align-items:center; gap:10px;
+    background:var(--ink); color:var(--cream);
+    padding:14px 26px;
+    font-size:.9rem; font-weight:500;
+    border:1px solid var(--ink);
+    transition:background .15s ease, color .15s ease;
+    white-space:nowrap;
+  }
+  .btn:hover{background:var(--rose); color:var(--ink);}
+
+  .section-label{
+    display:flex; align-items:center; gap:16px;
+    color:var(--ink-soft);
+    margin-bottom:6px;
+  }
+  .section-label::after{content:''; flex:1; height:1px; background:var(--line);}
+
+  .rows{margin-bottom:60px;}
+  .row{
+    display:flex; align-items:center; gap:18px;
+    padding:17px 2px;
+    border-bottom:1px solid var(--line);
+    transition:padding .15s ease, color .15s ease;
+  }
+  .row:hover{padding-left:10px; color:#a54f74;}
+  .row .num{font-family:'JetBrains Mono', monospace; font-size:11px; color:var(--ink-soft); width:24px;}
+  .row .icon{width:22px; height:22px; display:flex; align-items:center; justify-content:center; flex-shrink:0;}
+  .row .icon svg{width:20px; height:20px; fill:var(--ink);}
+  .row:hover .icon svg{fill:#a54f74;}
+  .row .icon .init{
+    width:20px; height:20px; border-radius:50%;
+    border:1.4px solid var(--ink);
+    display:flex; align-items:center; justify-content:center;
+    font-family:'JetBrains Mono', monospace; font-size:10px; font-weight:500;
+  }
+  .row:hover .icon .init{border-color:#a54f74; color:#a54f74;}
+  .row .name{font-weight:500; font-size:1rem; flex:1;}
+  .row .arrow{font-family:'JetBrains Mono', monospace; font-size:.85rem; color:var(--ink-soft);}
+  .row .tag{
+    font-family:'JetBrains Mono', monospace; font-size:10px; letter-spacing:.1em;
+    text-transform:uppercase;
+    padding:3px 8px;
+    border:1px solid var(--line-strong);
+    color:var(--ink-soft);
+  }
+
+  footer{
+    border-top:1px solid var(--line);
+    padding:20px 24px;
+    display:flex; align-items:center; justify-content:space-between;
+    flex-wrap:wrap; gap:10px;
+  }
+  footer .foot-logo img{height:20px; opacity:.85;}
+  footer .mono{color:var(--ink-soft);}
+  footer a:hover{color:#a54f74;}
+
+  a:focus-visible{outline:2px solid var(--rose); outline-offset:3px;}
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <a class="logo" href="index.html"><img src="assets/logo-black.png" alt="SUVI"></a>
+  <a class="back mono" href="index.html">← Back to the worlds</a>
+</div>
+
+<div class="wrap">
+  <div class="head">
+    <div class="sys mono">/music — Stream everywhere ✦</div>
+    <img class="head-logo" src="assets/logo-pink.png" alt="SUVI">
+    <h1>One voice. <em>Every platform.</em></h1>
+    <p>Tamil, English, Malayalam — indie pop, R&amp;B, rap, and healing frequencies. Pick your player.</p>
+  </div>
+
+  <div class="featured">
+    <div>
+      <span class="mono">Latest single</span>
+      <h2>Neechal</h2>
+    </div>
+    <a class="btn" href="https://www.madver.se/master/neechal-suvi" target="_blank" rel="noopener">Listen now →</a>
+  </div>
+
+  <div class="section-label mono">01 — Streaming</div>
+  <div class="rows">
+    <a class="row" href="https://open.spotify.com/artist/5gP4aEL0OvBlxgvod5C8jL" target="_blank" rel="noopener">
+      <span class="num">01</span>
+      <span class="icon"><svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 0C5.4 0 0 5.4 0 12s5.4 12 12 12 12-5.4 12-12S18.66 0 12 0zm5.521 17.34c-.24.359-.66.48-1.021.24-2.82-1.74-6.36-2.101-10.561-1.141-.418.122-.779-.179-.899-.539-.12-.421.18-.78.54-.9 4.56-1.021 8.52-.6 11.64 1.32.42.18.479.659.301 1.02zm1.44-3.3c-.301.42-.841.6-1.262.3-3.239-1.98-8.159-2.58-11.939-1.38-.479.12-1.02-.12-1.14-.6-.12-.48.12-1.021.6-1.141C9.6 9.9 15 10.561 18.72 12.84c.361.181.54.78.241 1.2zm.12-3.36C15.24 8.4 8.82 8.16 5.16 9.301c-.6.179-1.2-.181-1.38-.721-.18-.601.18-1.2.72-1.381 4.26-1.26 11.28-1.02 15.721 1.621.539.3.719 1.02.419 1.56-.299.421-1.02.599-1.559.3z"/></svg></span>
+      <span class="name">Spotify</span><span class="arrow">↗</span>
+    </a>
+    <a class="row" href="https://music.apple.com/in/artist/suvi-suresh/302903547" target="_blank" rel="noopener">
+      <span class="num">02</span>
+      <span class="icon"><svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12.152 6.896c-.948 0-2.415-1.078-3.96-1.04-2.04.027-3.91 1.183-4.961 3.014-2.117 3.675-.546 9.103 1.519 12.09 1.013 1.454 2.208 3.09 3.792 3.03 1.52-.065 2.09-.987 3.935-.987 1.831 0 2.35.987 3.96.948 1.637-.026 2.676-1.48 3.676-2.948 1.156-1.688 1.636-3.325 1.662-3.415-.039-.013-3.182-1.221-3.22-4.857-.026-3.04 2.48-4.494 2.597-4.559-1.429-2.09-3.623-2.324-4.39-2.376-2-.156-3.675 1.09-4.61 1.09zM15.53 3.83c.843-1.012 1.4-2.427 1.245-3.83-1.207.052-2.662.805-3.532 1.818-.78.896-1.454 2.338-1.273 3.714 1.338.104 2.715-.688 3.56-1.702z"/></svg></span>
+      <span class="name">Apple Music</span><span class="arrow">↗</span>
+    </a>
+    <a class="row" href="https://www.youtube.com/@SUVIMusic" target="_blank" rel="noopener">
+      <span class="num">03</span>
+      <span class="icon"><svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg></span>
+      <span class="name">YouTube</span><span class="tag" style="border-color:#a54f74; color:#a54f74;">Personal + long-form</span><span class="arrow">↗</span>
+    </a>
+    <a class="row" href="https://music.youtube.com/channel/UC3q4kyEICbmpGsKiSdlAYXw" target="_blank" rel="noopener">
+      <span class="num">04</span>
+      <span class="icon"><svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 0C5.376 0 0 5.376 0 12s5.376 12 12 12 12-5.376 12-12S18.624 0 12 0zm0 19.104c-3.924 0-7.104-3.18-7.104-7.104S8.076 4.896 12 4.896s7.104 3.18 7.104 7.104-3.18 7.104-7.104 7.104zm0-13.332c-3.432 0-6.228 2.796-6.228 6.228S8.568 18.228 12 18.228s6.228-2.796 6.228-6.228S15.432 5.772 12 5.772zM9.684 15.54V8.46L15.816 12l-6.132 3.54z"/></svg></span>
+      <span class="name">YouTube Music</span><span class="arrow">↗</span>
+    </a>
+    <a class="row" href="https://music.amazon.in/artists/B0028EXQ3Y/suvi-suresh" target="_blank" rel="noopener">
+      <span class="num">05</span>
+      <span class="icon"><span class="init">a</span></span>
+      <span class="name">Amazon Music</span><span class="arrow">↗</span>
+    </a>
+    <a class="row" href="https://gaana.com/artist/suvi" target="_blank" rel="noopener">
+      <span class="num">06</span>
+      <span class="icon"><span class="init">g</span></span>
+      <span class="name">Gaana</span><span class="arrow">↗</span>
+    </a>
+    <a class="row" href="https://www.jiosaavn.com/artist/suvi-songs/oKrhwpcTLY0_" target="_blank" rel="noopener">
+      <span class="num">07</span>
+      <span class="icon"><span class="init">j</span></span>
+      <span class="name">JioSaavn</span><span class="arrow">↗</span>
+    </a>
+  </div>
+
+  <div class="section-label mono">02 — Releases</div>
+  <div class="rows">
+    <a class="row" href="https://madver.se/master/suvi-backtotheroots" target="_blank" rel="noopener">
+      <span class="num">08</span>
+      <span class="icon"><span class="init">♪</span></span>
+      <span class="name">Back to the Roots</span><span class="tag">Single</span><span class="arrow">↗</span>
+    </a>
+  </div>
+
+  <div class="section-label mono">03 — Press &amp; social</div>
+  <div class="rows">
+    <a class="row" href="https://share.google/ZQ1yqPMegDGTytBCJ" target="_blank" rel="noopener">
+      <span class="num">09</span>
+      <span class="icon"><span class="init">i</span></span>
+      <span class="name">Indulge — feature on Back to the Roots</span><span class="tag">Press</span><span class="arrow">↗</span>
+    </a>
+    <a class="row" href="https://www.instagram.com/suvimusic/" target="_blank" rel="noopener">
+      <span class="num">10</span>
+      <span class="icon"><svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg></span>
+      <span class="name">Instagram</span><span class="arrow">↗</span>
+    </a>
+  </div>
+
+  <div class="featured" style="background:rgba(184,160,216,.16);">
+    <div>
+      <span class="mono">Stay close</span>
+      <h2>Letters from SUVI</h2>
+    </div>
+    <a class="btn" href="https://suvisociety.kit.com/3fee3d007b" target="_blank" rel="noopener">Subscribe →</a>
+  </div>
+</div>
+
+<footer>
+  <a class="foot-logo" href="index.html"><img src="assets/logo-black.png" alt="SUVI"></a>
+  <a href="index.html" class="mono">iamsuvi.com</a>
+  <span class="mono">© 2026 SUVI Society ✦</span>
+</footer>
+
+</body>
+</html>

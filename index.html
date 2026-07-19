@@ -1,0 +1,497 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SUVI — iamsuvi.com</title>
+<meta name="description" content="SUVI — singer-songwriter, vocal producer, DJ, sound healer. Three worlds: SUVI Music, SUVI Society, Oli with Suvi.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --cream:#FBF6E9;
+    --butter:#E8C558;
+    --rose:#D48BA8;
+    --rose-soft:rgba(212,139,168,.16);
+    --rose-mid:rgba(212,139,168,.38);
+    --lilac:#B8A0D8;
+    --sage:#A8CFA0;
+    --ink:#3E2E4F;
+    --ink-soft:rgba(62,46,79,.62);
+    --line:rgba(62,46,79,.22);
+    --line-strong:rgba(62,46,79,.45);
+  }
+  *{box-sizing:border-box; margin:0;}
+  html{scroll-behavior:smooth;}
+  body{
+    background-color:var(--cream);
+    background-image:
+      radial-gradient(ellipse 60% 40% at 85% 8%, var(--rose-soft) 0, transparent 70%),
+      radial-gradient(ellipse 50% 35% at 8% 85%, rgba(184,160,216,.14) 0, transparent 70%),
+      radial-gradient(rgba(62,46,79,.13) 1px, transparent 1px);
+    background-size:100% 100%, 100% 100%, 22px 22px;
+    color:var(--ink);
+    font-family:'Inter', sans-serif;
+    font-size:16px;
+    line-height:1.6;
+    min-height:100vh;
+    overflow-x:hidden;
+  }
+  a{color:inherit; text-decoration:none;}
+  .mono{font-family:'JetBrains Mono', monospace; font-size:11px; letter-spacing:.14em; text-transform:uppercase;}
+
+  /* ---------- boot ---------- */
+  #boot{
+    position:fixed; inset:0; z-index:999;
+    background:var(--cream);
+    display:flex; flex-direction:column; align-items:center; justify-content:center; gap:22px;
+  }
+  #boot img{width:150px; opacity:0; animation:fadeUp .5s ease forwards .1s;}
+  @keyframes fadeUp{to{opacity:1;}}
+  #boot .line-track{width:180px; height:1px; background:var(--line); position:relative; overflow:hidden;}
+  #boot .line-fill{position:absolute; inset:0; background:var(--rose); transform:scaleX(0); transform-origin:left; animation:load 1s ease forwards .2s;}
+  @keyframes load{to{transform:scaleX(1);}}
+  #boot.hide{animation:bootOut .4s ease forwards;}
+  @keyframes bootOut{to{opacity:0; visibility:hidden;}}
+  @media (prefers-reduced-motion: reduce){ #boot{display:none;} }
+
+  /* ---------- top bar ---------- */
+  .topbar{
+    position:sticky; top:0; z-index:50;
+    display:flex; align-items:center; justify-content:space-between;
+    padding:14px 24px;
+    background:rgba(251,246,233,.88);
+    backdrop-filter:blur(8px);
+    border-bottom:1px solid var(--line);
+  }
+  .topbar .logo img{height:26px; display:block;}
+  .topbar nav{display:flex; gap:26px;}
+  .topbar nav a{color:var(--ink-soft);}
+  .topbar nav a:hover{color:var(--ink); border-bottom:1px solid var(--rose);}
+  .topbar .clock{color:var(--ink-soft);}
+  @media (max-width:600px){ .topbar nav{display:none;} }
+
+  /* ---------- ticker ---------- */
+  .ticker{
+    border-bottom:1px solid var(--line);
+    background:var(--rose-soft);
+    overflow:hidden;
+    white-space:nowrap;
+  }
+  .ticker-inner{
+    display:inline-block;
+    padding:8px 0;
+    animation:ticker 28s linear infinite;
+    color:var(--ink-soft);
+  }
+  @keyframes ticker{0%{transform:translateX(0);}100%{transform:translateX(-50%);}}
+  @media (prefers-reduced-motion: reduce){ .ticker-inner{animation:none;} }
+
+  /* ---------- hero ---------- */
+  .hero{
+    max-width:1180px;
+    margin:0 auto;
+    padding:80px 24px 90px;
+    display:grid;
+    grid-template-columns:1.2fr .8fr;
+    gap:56px;
+    align-items:center;
+  }
+  @media (max-width:880px){
+    .hero{grid-template-columns:1fr; padding-top:56px;}
+  }
+  .hero .sys{color:var(--ink-soft); margin-bottom:26px; display:flex; align-items:center; gap:10px;}
+  .hero .sys::before{content:''; width:7px; height:7px; border-radius:50%; background:var(--rose); display:inline-block;}
+  .hero-logo{width:min(420px, 82%); display:block; margin-bottom:26px;}
+  h1{
+    font-family:'Cormorant Garamond', serif;
+    font-weight:500;
+    font-size:clamp(2.4rem, 6vw, 4rem);
+    line-height:1.06;
+    letter-spacing:-.01em;
+    margin-bottom:26px;
+  }
+  h1 em{font-style:italic; font-weight:400; color:var(--rose); }
+  .hero p{
+    max-width:52ch;
+    color:var(--ink-soft);
+    font-size:1.05rem;
+    margin-bottom:38px;
+  }
+  .hero .cue{
+    display:inline-flex; align-items:center; gap:12px;
+    color:var(--ink);
+    border-bottom:1px solid var(--rose);
+    padding-bottom:4px;
+  }
+  .hero .cue:hover{border-color:var(--ink);}
+
+  /* video window */
+  .vid-window{
+    justify-self:center;
+    width:min(300px, 78vw);
+    border:1px solid var(--ink);
+    background:var(--cream);
+    box-shadow:8px 8px 0 var(--rose-mid);
+    transform:rotate(2deg);
+    transition:transform .25s ease;
+  }
+  .vid-window:hover{transform:rotate(0deg);}
+  .vid-titlebar{
+    display:flex; align-items:center; justify-content:space-between;
+    padding:8px 12px;
+    border-bottom:1px solid var(--ink);
+    background:var(--rose-soft);
+  }
+  .vid-titlebar .mono{font-size:10px; color:var(--ink-soft);}
+  .vid-titlebar .dots{display:flex; gap:5px;}
+  .vid-titlebar .dots span{width:8px; height:8px; border-radius:50%; border:1px solid var(--ink);}
+  .vid-titlebar .dots span:nth-child(1){background:var(--rose);}
+  .vid-titlebar .dots span:nth-child(2){background:var(--butter);}
+  .vid-titlebar .dots span:nth-child(3){background:var(--sage);}
+  .vid-window video{display:block; width:100%; height:auto;}
+
+  /* ---------- worlds ---------- */
+  .worlds{
+    max-width:1180px;
+    margin:0 auto;
+    padding:0 24px 110px;
+  }
+  .worlds-label{
+    display:flex; align-items:center; gap:16px;
+    color:var(--ink-soft);
+    margin-bottom:28px;
+  }
+  .worlds-label::after{content:''; flex:1; height:1px; background:var(--line);}
+  .grid{
+    display:grid;
+    grid-template-columns:repeat(3, 1fr);
+    gap:1px;
+    background:var(--line);
+    border:1px solid var(--line);
+  }
+  @media (max-width:880px){ .grid{grid-template-columns:1fr;} }
+  .world{
+    background:var(--cream);
+    display:flex; flex-direction:column;
+    min-height:400px;
+  }
+  .world-titlebar{
+    display:flex; align-items:center; justify-content:space-between;
+    padding:10px 16px;
+    border-bottom:1px solid var(--line);
+  }
+  .world-titlebar .mono{color:var(--ink-soft);}
+  .world-titlebar .dots{display:flex; gap:5px;}
+  .world-titlebar .dots span{width:7px; height:7px; border-radius:50%; border:1px solid var(--line-strong);}
+  .world-body{padding:26px 26px 26px; display:flex; flex-direction:column; gap:16px; flex:1;}
+  .world .dot{width:9px; height:9px; border-radius:50%;}
+  .d-butter{background:var(--butter);}
+  .d-rose{background:var(--rose);}
+  .d-lilac{background:var(--lilac);}
+  .world h2{
+    font-family:'Cormorant Garamond', serif;
+    font-weight:600;
+    font-size:1.9rem;
+    line-height:1.1;
+  }
+  .world-body > p{color:var(--ink-soft); font-size:.94rem; flex:1;}
+  .world .links{display:flex; flex-direction:column;}
+  .wlink{
+    display:flex; align-items:center; justify-content:space-between;
+    padding:13px 2px;
+    border-top:1px solid var(--line);
+    font-size:.9rem;
+    font-weight:500;
+    transition:padding .15s ease, color .15s ease;
+  }
+  .wlink:hover{padding-left:8px; color:#a54f74;}
+  .wlink .arrow{color:var(--ink-soft); font-family:'JetBrains Mono', monospace; font-size:.8rem;}
+
+  /* hover tint per world */
+  .world:nth-child(1) .world-titlebar{background:rgba(232,197,88,.14);}
+  .world:nth-child(2) .world-titlebar{background:var(--rose-soft);}
+  .world:nth-child(3) .world-titlebar{background:rgba(184,160,216,.16);}
+
+  /* ---------- statement ---------- */
+  .statement{
+    max-width:960px;
+    margin:0 auto;
+    padding:0 24px 110px;
+    text-align:center;
+  }
+  .statement .spark{color:var(--rose); font-size:1.1rem; display:block; margin-bottom:18px;}
+  .statement blockquote{
+    font-family:'Cormorant Garamond', serif;
+    font-style:italic;
+    font-weight:400;
+    font-size:clamp(1.5rem, 4vw, 2.3rem);
+    line-height:1.3;
+  }
+  .statement .mono{color:var(--ink-soft); display:block; margin-top:22px;}
+
+  /* ---------- newsletter ---------- */
+  .newsletter{
+    max-width:1180px;
+    margin:0 auto 110px;
+    padding:0 24px;
+  }
+  .news-box{
+    border:1px solid var(--ink);
+    box-shadow:8px 8px 0 var(--rose-mid);
+    padding:52px 40px;
+    display:flex; align-items:center; justify-content:space-between; gap:30px;
+    flex-wrap:wrap;
+    background:var(--rose-soft);
+  }
+  .news-box h3{
+    font-family:'Cormorant Garamond', serif;
+    font-weight:600;
+    font-size:1.9rem;
+    margin-bottom:8px;
+  }
+  .news-box p{color:var(--ink-soft); max-width:44ch; font-size:.95rem;}
+  .btn{
+    display:inline-flex; align-items:center; gap:10px;
+    background:var(--ink); color:var(--cream);
+    padding:14px 26px;
+    font-size:.9rem; font-weight:500;
+    border:1px solid var(--ink);
+    transition:background .15s ease, color .15s ease;
+    white-space:nowrap;
+  }
+  .btn:hover{background:var(--rose); color:var(--ink); border-color:var(--ink);}
+
+  /* ---------- modal ---------- */
+  .modal-overlay{
+    position:fixed; inset:0; z-index:200;
+    background:rgba(62,46,79,.4);
+    backdrop-filter:blur(3px);
+    display:none; align-items:center; justify-content:center;
+    padding:20px;
+  }
+  .modal-overlay.open{display:flex;}
+  .modal{
+    background:var(--cream);
+    border:1px solid var(--ink);
+    box-shadow:8px 8px 0 var(--rose-mid);
+    max-width:560px; width:100%; max-height:82vh;
+    display:flex; flex-direction:column;
+  }
+  .modal-head{
+    display:flex; align-items:center; justify-content:space-between;
+    padding:12px 20px;
+    border-bottom:1px solid var(--ink);
+    background:var(--rose-soft);
+  }
+  .modal-head .mono{color:var(--ink-soft);}
+  .modal-close{
+    background:none; border:none; cursor:pointer;
+    font-family:'JetBrains Mono', monospace;
+    font-size:14px; color:var(--ink);
+    padding:4px 8px;
+  }
+  .modal-body{padding:32px 30px 36px; overflow-y:auto;}
+  .modal-body h3{
+    font-family:'Cormorant Garamond', serif;
+    font-weight:600;
+    font-size:1.7rem;
+    line-height:1.2;
+    margin-bottom:16px;
+  }
+  .modal-body p{color:var(--ink-soft); font-size:.95rem; margin-bottom:14px;}
+  .modal-body .btn{margin-top:10px;}
+
+  /* ---------- footer ---------- */
+  footer{
+    border-top:1px solid var(--line);
+    padding:22px 24px;
+    display:flex; align-items:center; justify-content:space-between;
+    flex-wrap:wrap; gap:14px;
+  }
+  footer .foot-logo img{height:20px; opacity:.85;}
+  footer .mono{color:var(--ink-soft);}
+  footer .socials{display:flex; gap:20px;}
+  footer .socials a{color:var(--ink-soft); font-size:.85rem;}
+  footer .socials a:hover{color:#a54f74;}
+
+  a:focus-visible, button:focus-visible{outline:2px solid var(--rose); outline-offset:3px;}
+</style>
+</head>
+<body>
+
+<div id="boot" aria-hidden="true">
+  <img src="assets/logo-pink.png" alt="">
+  <div class="line-track"><div class="line-fill"></div></div>
+</div>
+
+<div class="topbar">
+  <a class="logo" href="index.html"><img src="assets/logo-black.png" alt="SUVI"></a>
+  <nav class="mono">
+    <a href="#worlds">Worlds</a>
+    <a href="music.html">Music</a>
+    <a href="#" onclick="openModal('about'); return false;">Story</a>
+    <a href="https://suvisociety.kit.com/3fee3d007b" target="_blank" rel="noopener">Newsletter</a>
+  </nav>
+  <span class="mono clock" id="clock">--:--</span>
+</div>
+
+<div class="ticker" aria-hidden="true">
+  <div class="ticker-inner mono">
+    ✦ SUVI MUSIC — VOCAL COLLABORATION ✦ SUVI SOCIETY — MENTORSHIP &amp; STORY ✦ OLI WITH SUVI — SOUND HEALING ✦ LATEST SINGLE: NEECHAL ✦&nbsp;
+    ✦ SUVI MUSIC — VOCAL COLLABORATION ✦ SUVI SOCIETY — MENTORSHIP &amp; STORY ✦ OLI WITH SUVI — SOUND HEALING ✦ LATEST SINGLE: NEECHAL ✦&nbsp;
+  </div>
+</div>
+
+<section class="hero">
+  <div>
+    <div class="sys mono">Artist Operating System — v2026</div>
+    <img class="hero-logo" src="assets/logo-pink.png" alt="SUVI">
+    <h1>Sing. Build. <em>Heal.</em></h1>
+    <p>Singer-songwriter, vocal producer, DJ, and sound healer. Building a life and career in real time, without waiting for permission. Three worlds live here — choose the one you came for.</p>
+    <a class="cue mono" href="#worlds">Enter ↓</a>
+  </div>
+  <div class="vid-window">
+    <div class="vid-titlebar">
+      <span class="mono">suvi_world.mp4</span>
+      <span class="dots"><span></span><span></span><span></span></span>
+    </div>
+    <video autoplay muted loop playsinline poster="" preload="metadata">
+      <source src="assets/hero-loop.mp4" type="video/mp4">
+    </video>
+  </div>
+</section>
+
+<main class="worlds" id="worlds">
+  <div class="worlds-label mono">01 — The Three Worlds ✦</div>
+  <div class="grid">
+
+    <div class="world">
+      <div class="world-titlebar">
+        <span class="mono">/music</span>
+        <span class="dots"><span></span><span></span><span></span></span>
+      </div>
+      <div class="world-body">
+        <span class="dot d-butter"></span>
+        <h2>SUVI Music</h2>
+        <p>Songs, vocal production, and 1:1 work with artists. Two decades in — from a Sony Music pop group to independent, multilingual, and fully sovereign.</p>
+        <div class="links">
+          <a class="wlink" href="https://www.madver.se/master/neechal-suvi" target="_blank" rel="noopener">Latest single — Neechal <span class="arrow">↗</span></a>
+          <a class="wlink" href="https://soundbetter.com/profiles/20644-suvi--popr&amp;bdanceafrourban" target="_blank" rel="noopener">Vocal collaboration — SoundBetter <span class="arrow">↗</span></a>
+          <a class="wlink" href="music.html">Stream everywhere <span class="arrow">→</span></a>
+        </div>
+      </div>
+    </div>
+
+    <div class="world">
+      <div class="world-titlebar">
+        <span class="mono">/society</span>
+        <span class="dots"><span></span><span></span><span></span></span>
+      </div>
+      <div class="world-body">
+        <span class="dot d-rose"></span>
+        <h2>SUVI Society</h2>
+        <p>The story, the mentorship, the inner circle. For creatives who want the craft and the career — not just the highlight reel.</p>
+        <div class="links">
+          <a class="wlink" href="https://my.soundbetter.com/suvimusic" target="_blank" rel="noopener">Services &amp; products <span class="arrow">↗</span></a>
+          <a class="wlink" href="#" onclick="openModal('about'); return false;">Read the story <span class="arrow">→</span></a>
+          <a class="wlink" href="https://suvisociety.kit.com/3fee3d007b" target="_blank" rel="noopener">Join the newsletter <span class="arrow">↗</span></a>
+        </div>
+      </div>
+    </div>
+
+    <div class="world">
+      <div class="world-titlebar">
+        <span class="mono">/oli</span>
+        <span class="dots"><span></span><span></span><span></span></span>
+      </div>
+      <div class="world-body">
+        <span class="dot d-lilac"></span>
+        <h2>Oli with Suvi</h2>
+        <p>Sound healing and nervous-system work. Music and healing were never separate — they're the same gift, spoken differently.</p>
+        <div class="links">
+          <a class="wlink" href="https://my.soundbetter.com/suvimusic/products/381-oli-with-suvi-1-1-sound-healing-container" target="_blank" rel="noopener">1:1 Sound Healing Container <span class="arrow">↗</span></a>
+          <a class="wlink" href="https://suvisociety.kit.com/3fee3d007b" target="_blank" rel="noopener">Join the newsletter <span class="arrow">↗</span></a>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</main>
+
+<section class="newsletter" style="margin-bottom:110px;">
+  <div class="news-box" style="background:rgba(232,197,88,.14);">
+    <div>
+      <span class="mono" style="color:var(--ink-soft); display:block; margin-bottom:10px;">✦ The deep end</span>
+      <h3>The real story lives on YouTube</h3>
+      <p>Long-form, personal, unfiltered — the process, the lessons, the woman behind the music. This is where I go deepest.</p>
+    </div>
+    <a class="btn" href="https://www.youtube.com/@SUVIMusic" target="_blank" rel="noopener">Watch on YouTube →</a>
+  </div>
+</section>
+
+<section class="statement">
+  <span class="spark">✦</span>
+  <blockquote>"Artistry, spirituality, and entrepreneurship are not in conflict — they are the blueprint."</blockquote>
+  <span class="mono">— SUVI</span>
+</section>
+
+<section class="newsletter">
+  <div class="news-box">
+    <div>
+      <h3>Letters from all three worlds</h3>
+      <p>Music drops, mentorship doors, healing sessions — one newsletter, straight from me.</p>
+    </div>
+    <a class="btn" href="https://suvisociety.kit.com/3fee3d007b" target="_blank" rel="noopener">Subscribe →</a>
+  </div>
+</section>
+
+<div class="modal-overlay" id="modal-about">
+  <div class="modal">
+    <div class="modal-head">
+      <span class="mono">/story</span>
+      <button class="modal-close" onclick="closeModal('about')" aria-label="Close">✕</button>
+    </div>
+    <div class="modal-body">
+      <h3>Success without sovereignty is a cage.</h3>
+      <p>I built a career inside systems that weren't designed to fully hold me — the fame, the visibility, the validation. Then I stepped away. Not because I failed, but because I refused to disappear inside someone else's vision.</p>
+      <p>In 2025 I came home to Chennai after fifteen years in the U.S. — not with nostalgia, but with responsibility. Today I stand as a singer, songwriter, rapper, DJ, producer, healer, mother, and wife, building all of it in the open.</p>
+      <p>My story isn't theoretical. It's twenty years lived. Proof that spiritual and strategic, soft and formidable, creative and financially sovereign are not opposites.</p>
+      <a class="btn" href="https://suvisociety.kit.com/3fee3d007b" target="_blank" rel="noopener">Follow the journey →</a>
+    </div>
+  </div>
+</div>
+
+<footer>
+  <a class="foot-logo" href="index.html"><img src="assets/logo-black.png" alt="SUVI"></a>
+  <div class="socials">
+    <a href="https://www.instagram.com/suvimusic/" target="_blank" rel="noopener">Instagram</a>
+    <a href="https://www.youtube.com/@SUVIMusic" target="_blank" rel="noopener">YouTube</a>
+    <a href="music.html">All platforms</a>
+  </div>
+  <span class="mono">© 2026 SUVI Society ✦ <span id="footClock">--:--</span></span>
+</footer>
+
+<script>
+  window.addEventListener('load', function(){
+    setTimeout(function(){ document.getElementById('boot').classList.add('hide'); }, 1250);
+  });
+  function openModal(id){ document.getElementById('modal-'+id).classList.add('open'); document.body.style.overflow='hidden'; }
+  function closeModal(id){ document.getElementById('modal-'+id).classList.remove('open'); document.body.style.overflow=''; }
+  document.querySelectorAll('.modal-overlay').forEach(function(ov){
+    ov.addEventListener('click', function(e){ if(e.target===ov){ ov.classList.remove('open'); document.body.style.overflow=''; } });
+  });
+  document.addEventListener('keydown', function(e){
+    if(e.key==='Escape'){ document.querySelectorAll('.modal-overlay.open').forEach(function(ov){ ov.classList.remove('open'); }); document.body.style.overflow=''; }
+  });
+  function tick(){
+    var t = new Date().toLocaleTimeString([], {hour:'2-digit', minute:'2-digit'});
+    document.getElementById('clock').textContent = t;
+    document.getElementById('footClock').textContent = t;
+  }
+  tick(); setInterval(tick, 15000);
+</script>
+
+</body>
+</html>
